@@ -25,9 +25,11 @@
 
 ## Technology Stack:
 (List the hardware platform, software tools, language(s), etc. you plan to use)
+- Hardware platform
 - Raspberry Pi Start Guide
 - M.2 Waveshare Hailo-8 Acce A; with PCIe To M.2 adaptor 
-  Software Tools
+
+- Software Tools
 - Raspberry Pi OS: The operating system running on the Raspberry Pi, providing a Linux-based environment for development.
 - Hailo-8 SDK: Software development kit for Hailo-8, which includes libraries and tools for model conversion, optimization, and deployment on the Hailo-8 accelerator.
 - TensorFlow Lite: Lightweight version of TensorFlow designed for mobile and embedded devices, used for running inference with optimized models.
@@ -37,16 +39,15 @@
 - Matplotlib or Seaborn: Python libraries for data visualization, used to create graphs comparing inference time, FPS, accuracy, etc.
 - psutil: Python library for monitoring CPU and memory usage during inference, used to gather resource usage statistics.
 
-Languages
-
+- Languages
 - Python: Used for writing scripts to load models, run inference, and collect performance metrics.
-
-Data Sources
-
+  
+- Data Sources
 - Image Classification Datasets: Public datasets like CIFAR-10 or MNIST for model testing and benchmarking.
 
 ## Expected Outcomes:
 (Describe what you expect to deliver at the end of the project)
+
 Compare the following metrics between different models:
 - Inference time.
 - Inference speed (frames per second).
