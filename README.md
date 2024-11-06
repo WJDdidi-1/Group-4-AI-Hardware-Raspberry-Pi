@@ -1,8 +1,8 @@
-# AI_Hardware_Project_Template
+# AI_Hardware_Project_ECE6501_Group_4
 
 ## Team Name: 
 (Enter your team name from Canvas)
-ECE6501-Group4
+- ECE6501-Group4
 ## Team Members:
 - Jiandi Wang
 - Yunwei Cai
@@ -11,12 +11,12 @@ ECE6501-Group4
 
 ## Project Title:
 (Enter your project title - be creative)
-Accelerated Testing of Image Classification Task Based on Raspberry Pi 5
+- Accelerated Testing of Image Classification Task Based on Raspberry Pi 5
 
 ## Project Description:
 (Provide a short description of the problem you're addressing)
-The image classification task was accelerated on Raspberry Pi with Waveshare Hailo-8 accelerators.
-Comparing different models like MobileNet and ResNet, we show efficient AI reasoning on edge devices.
+- The image classification task was accelerated on Raspberry Pi with Waveshare Hailo-8 accelerators.
+- Comparing different models like MobileNet and ResNet, we show efficient AI reasoning on edge devices.
 
 ## Key Objectives:
 - Task Acceleration: Image classification task was accelerated on Raspberry Pi with Waveshare Hailo-8 accelerators.
@@ -48,11 +48,11 @@ Data Sources
 ## Expected Outcomes:
 (Describe what you expect to deliver at the end of the project)
 Compare the following metrics between different models:
-• Inference time.
-• Inference speed (frames per second).
-• Accuracy, and CPU/memory utilization.
-• The impact of quantization and optimization (if time permits).
+- Inference time.
+- Inference speed (frames per second).
+- Accuracy, and CPU/memory utilization.
+- The impact of quantization and optimization (if time permits).
 
 ## Timeline:
 (Provide a rough timeline or milestones for the project)
-About 5/12/2024
+- About 5/12/2024
