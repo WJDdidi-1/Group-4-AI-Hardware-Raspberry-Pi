@@ -32,11 +32,21 @@
 - 支持多种模型的快速部署（分类、检测、分割等）  
 - 完成硬件-软件一体化平台原型并通过功能验证  
 
+## 模型下载
+为方便快速测试，本项目提供已训练好的深度学习模型：  
+- **ResNet-50**: [Google Drive 下载](https://drive.google.com/your_model_link)
+- **MobileNetV2**: [Google Drive 下载](https://drive.google.com/your_model_link) 
+- **YOLOv5**: [Google Drive 下载](https://drive.google.com/your_model_link)
+
 ## 使用方法
 ```bash
 git clone https://github.com/yourusername/AI-Hardware.git
 cd AI-Hardware
 # 安装依赖
 pip install -r requirements.txt
+
+# 下载模型到 models/ 目录
+bash scripts/download_models.sh
+
 # 编译硬件模块并运行推理示例
 make run
