@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+mnist_images/
+best_model.h5
+*.h5
+.venv/
