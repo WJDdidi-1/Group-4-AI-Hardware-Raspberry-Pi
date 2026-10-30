@@ -1,52 +1,54 @@
-# AI Hardware: 面向深度学习推理的硬件加速平台
+# 边缘设备上的 MNIST 模型对比（Raspberry Pi / AI Hardware 课程项目）
 
-## 项目背景
-随着人工智能算法的快速发展，深度学习推理在计算性能和能效方面的需求不断提升。传统 CPU 或 GPU 虽然具备通用性，但在特定推理任务上的计算效率与能耗表现仍存在优化空间。为了满足嵌入式设备、边缘计算节点以及高性能服务器对低延迟、高吞吐推理的需求，需要设计并实现面向 AI 应用的专用硬件加速平台。
+同一个任务（手写数字识别）上，把四个卷积网络跑一遍，记录**准确率、推理延迟、
+CPU/内存占用**，用来回答课程里那个问题：在边缘设备上，模型容量和延迟该怎么权衡。
 
-## 项目目标
-- 设计并实现支持深度学习推理的硬件加速架构  
-- 提供从模型部署到推理执行的完整软件工具链  
-- 在保证精度的前提下显著降低推理延迟与能耗  
+代码分两套框架，因为组里各人环境不同：
 
-## 技术栈
-- **硬件平台**: FPGA / ASIC 原型  
-- **编程语言**: Verilog / VHDL, Python, C++  
-- **深度学习框架适配**: TensorFlow Lite, PyTorch  
-- **工具链**: Vivado, Quartus, ModelSim  
-- **加速算法**: 卷积运算优化、量化推理、稀疏计算支持  
+| 脚本 | 框架 | 模型 | 输入 |
+| --- | --- | --- | --- |
+| `ResNet_train.py` / `ResNet_test.py` / `rnet_3.py` | TensorFlow / Keras | ResNet-50（ImageNet 权重迁移） | 28×28×3 |
+| `EfficientNet-B0_test.py` | PyTorch | EfficientNet-B0 | 32×32×3 |
+| `mobilenet_v2_test.py` | PyTorch | MobileNetV2 | 32×32×3 |
+| `mnet_test.py` | PyTorch（较早版本） | MobileNetV2 | 32×32×3 |
+| `dataloader.py` | TensorFlow | —— | 把 MNIST 展开成 `mnist_images/<split>/<label>/<i>.png`，供非 TF 脚本读取 |
+| `predict.py` | TensorFlow | 读 `best_model.h5` | 单张 32×32 图片 |
 
-## 主要功能
-- **硬件加速器设计**：支持卷积、矩阵乘法等核心运算模块的并行化执行  
-- **量化推理支持**：将浮点运算转化为低比特宽度整数运算，提高吞吐率  
-- **软件驱动与 API**：提供易用的 Python/C++ 接口，实现模型快速部署  
-- **性能分析工具**：实时监控延迟、功耗及吞吐性能  
+测试脚本里的计时段落用 `time.perf_counter()` 包住前向推理，并用 `psutil`
+采样 CPU 与内存；混淆矩阵和分类报告由 `scikit-learn`、`seaborn` 输出。
 
-## 你的贡献
-- 负责硬件架构设计与优化，实现数据流并行处理  
-- 开发驱动程序与 Python API，支持深度学习框架快速调用  
-- 优化内存访问与缓存策略，减少数据传输瓶颈  
-- 搭建完整的软硬件协同开发与测试流程  
+## 怎么跑
 
-## 成果
-- 在 ResNet-50 推理任务中，相比纯 CPU 推理延迟降低约 60%，功耗下降 35%  
-- 支持多种模型的快速部署（分类、检测、分割等）  
-- 完成硬件-软件一体化平台原型并通过功能验证  
+```console
+$ pip install -r requirements.txt
 
-## 模型下载
-为方便快速测试，本项目提供已训练好的深度学习模型：  
-- **ResNet-50**: [Google Drive 下载](https://drive.google.com/your_model_link)
-- **MobileNetV2**: [Google Drive 下载](https://drive.google.com/your_model_link) 
-- **YOLOv5**: [Google Drive 下载](https://drive.google.com/your_model_link)
+# 1. 先把 MNIST 落成图片目录（TF 脚本会自己下载数据集）
+$ python dataloader.py
 
-## 使用方法
-```bash
-git clone https://github.com/yourusername/AI-Hardware.git
-cd AI-Hardware
-# 安装依赖
-pip install -r requirements.txt
+# 2. 训练 + 测试：任选一个
+$ python ResNet_train.py
+$ python mobilenet_v2_test.py
+$ python EfficientNet-B0_test.py
+```
 
-# 下载模型到 models/ 目录
-bash scripts/download_models.sh
+`requirements.txt` 里两套框架都给上了；实际只需要装你跑的那一套（TF 或 PyTorch）。
 
-# 编译硬件模块并运行推理示例
-make run
+## 关于本 README 的旧版本
+
+旧 README 描述的是「FPGA/ASIC 加速平台、Verilog 数据流并行、相对 CPU 延迟降低
+60%、功耗下降 35%」，还带了三个 `https://drive.google.com/your_model_link`
+占位链接。**这些内容与仓库里的代码不符**，本仓库里没有任何 RTL、没有功耗测量、
+也没有可下载的模型文件。现在这份 README 只描述仓库里真实存在的脚本；课程报告里
+的硬件设计与性能数字不在这里，也不在本仓库的复现范围内。
+
+## 限制
+
+- MNIST 上跑 ResNet-50 / EfficientNet-B0，参数量远超任务需要，延迟对比受输入
+  尺寸影响很大（28×28 与 32×32 之间的重采样本身就带误差）。
+- 没有固定随机种子，两次运行的准确率会有小波动；脚本里也没有保存训练好的权重
+  （`predict.py` 期望的 `best_model.h5` 需要自己先训出来）。
+- 计时是 wall-clock，包含数据搬运，不等于纯算子耗时。
+
+## 许可
+
+没有 LICENSE 文件，按默认版权处理（保留所有权利）。

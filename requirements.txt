@@ -1,0 +1,14 @@
+# TensorFlow scripts
+tensorflow>=2.12
+scikit-learn>=1.2
+pandas>=2.0
+# PyTorch scripts
+torch>=2.1
+torchvision>=0.16
+# Shared
+numpy>=1.24
+pillow>=10.0
+matplotlib>=3.7
+seaborn>=0.12
+psutil>=5.9
+keras-preprocessing>=1.1
