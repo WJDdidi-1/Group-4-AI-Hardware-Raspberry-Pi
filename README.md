@@ -51,4 +51,4 @@ $ python EfficientNet-B0_test.py
 
 ## 许可
 
-没有 LICENSE 文件，按默认版权处理（保留所有权利）。
+MIT，见 [LICENSE](LICENSE)。
